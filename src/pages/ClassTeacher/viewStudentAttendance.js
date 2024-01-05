@@ -81,6 +81,7 @@ const ViewStudentAttendance = () => {
       return null;
     }
   };
+
   const resetForm = () => {
     setSelectedClass("");
     setSelectedSubject("");
@@ -93,10 +94,11 @@ const ViewStudentAttendance = () => {
     setSelectedStudent(null); // Reset the selected student value to null
   };
 
+  
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
-      console.log("Student",SelectedStudent);
+      console.log("Student", SelectedStudent);
       const url = "http://localhost:8010/api/teacher/student/attendance";
       const data = {
         type: selectedType,
@@ -108,6 +110,7 @@ const ViewStudentAttendance = () => {
 
       if (selectedType === "2") {
         data.singleDate = singleDate;
+        console.log(data.singleDate);
       } else if (selectedType === "3") {
         data.fromDate = Fromdate;
         data.toDate = Todate;
@@ -130,17 +133,7 @@ const ViewStudentAttendance = () => {
 
       resetForm();
     },
-    [
-      Fromdate,
-      Todate,
-      adNo,
-      armId,
-      classId,
-      selectedType,
-      singleDate,
-      subjectId,
-      SelectedStudent
-    ]
+    [SelectedStudent, selectedType, adNo, classId, armId, subjectId, singleDate, Fromdate, Todate]
   );
 
   const fetchStudentsInClass = useCallback(async () => {
@@ -165,7 +158,9 @@ const ViewStudentAttendance = () => {
       setClassId(value.Id); //classId created to pass to a backend.
 
       const getArms = async () => {
-        const response2 = await fetch(`${url}/api/admin/classarm/getById/${value.Id}`);
+        const response2 = await fetch(
+          `${url}/api/admin/class/arms/getall/${value.Id}`
+        );
         const data2 = await response2.json();
         setArms(data2);
 
@@ -182,7 +177,7 @@ const ViewStudentAttendance = () => {
     if (classId && armId) {
       fetchStudentsInClass();
     }
-  }, [classId, armId, fetchStudentsInClass]);
+  }, [classId, armId, fetchStudentsInClass, selectedSubject]);
 
   const getStatusCell = (value) => {
     const status = value === "1" ? "Present" : "Absent";
@@ -204,7 +199,6 @@ const ViewStudentAttendance = () => {
     { label: "Date", field: "dateTimeTaken" },
   ];
 
-
   useEffect(() => {
     const fetchClasses = async () => {
       let url1 = "http://localhost:8010";
@@ -215,7 +209,7 @@ const ViewStudentAttendance = () => {
     fetchClasses();
   }, []);
 
-  
+  // console.log(selectedType);
   return (
     <div>
       <div id="page-top">
@@ -251,7 +245,10 @@ const ViewStudentAttendance = () => {
                         {/* <?php echo $statusMsg; ?> */}
                       </div>
                       <div className="card-body">
-                        <form autoComplete="on" onSubmit={(e) => handleSubmit(e)}>
+                        <form
+                          autoComplete="on"
+                          onSubmit={(e) => handleSubmit(e)}
+                        >
                           <div className="form-group row mb-3">
                             <div className="col-xl-4 ">
                               <label className="form-control-label">
@@ -382,20 +379,7 @@ const ViewStudentAttendance = () => {
                               {renderExtraFields()}
                             </div>
                           </div>
-                          {/* <?php
-                        echo"<div id='txtHint'></div>";
-                      ?>
-                    <!-- <div className="form-group row mb-3">
-                        <div className="col-xl-6">
-                        <label className="form-control-label">Select Student<span className="text-danger ml-2">*</span></label>
-                        
-                        </div>
-                        <div className="col-xl-6">
-                        <label className="form-control-label">Type<span className="text-danger ml-2">*</span></label>
-                        
-                        </div>
-                    </div> --> */}
-
+               
                           <button
                             type="submit"
                             name="view"
@@ -418,26 +402,26 @@ const ViewStudentAttendance = () => {
                           </div>
                           <div className="table-responsive align-items-center table-flush p-3">
                             {fetchStudents && fetchStudents.length > 0 ? (
-                            <DynamicTable
-                              columns={tableColumns} // Pass tableColumns as the columns prop
-                              rows={fetchStudents.map((row, i) => {
-                                return {
-                                  index: i + 1,
-                                  firstName: row.firstName,
-                                  lastName: row.lastName,
-                                  otherName: row.otherName,
-                                  admissionNumber: row.admissionNumber,
-                                  className: row.className,
-                                  classArmName: row.classArmName,
-                                  sessionName: row.sessionName,
-                                  termName: row.termName,
-                                  status: getStatusCell(row.status), // Format the "Status" field using getStatusCell
-                                  dateTimeTaken: row.dateTimeTaken,
-                                };
-                              })}
-                              // className="custom-table" // Add a custom class name for the table
-                            />
-                          )  : (
+                              <DynamicTable
+                                columns={tableColumns} // Pass tableColumns as the columns prop
+                                rows={fetchStudents.map((row, i) => {
+                                  return {
+                                    index: i + 1,
+                                    firstName: row.firstName,
+                                    lastName: row.lastName,
+                                    otherName: row.otherName,
+                                    admissionNumber: row.admissionNumber,
+                                    className: row.className,
+                                    classArmName: row.classArmName,
+                                    sessionName: row.sessionName,
+                                    termName: row.termName,
+                                    status: getStatusCell(row.status), // Format the "Status" field using getStatusCell
+                                    dateTimeTaken: row.dateTimeTaken,
+                                  };
+                                })}
+                                // className="custom-table" // Add a custom class name for the table
+                              />
+                            ) : (
                               <div className="alert alert-danger" role="alert">
                                 No Record Found!
                               </div>

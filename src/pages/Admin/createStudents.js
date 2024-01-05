@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 function CreateStudents() {
-  const url = "http://localhost:5000";
+  const url = "http://localhost:8010";
   const key = "key_local_storage";
   const [students, setStudents] = useState(
     JSON.parse(localStorage.getItem(key)) ?? []
@@ -45,17 +45,19 @@ function CreateStudents() {
     arr.push(object.className);
   });
 
+ 
   const arr2 = [];
   Arms.forEach((arm) => {
     arr2.push(arm.classArmName);
   });
+
 
   const FilterHandle = (e) => {
     setCategory(e.target.value);
     const Index = classes.find((i) => i.className === e.target.value);
     setClassId(Index.Id);
     const getClasses = async () => {
-      const response2 = await fetch(`${url}/api/admin/classarm/getById/${Index.Id}`);
+      const response2 = await fetch(`${url}/api/admin/class/arms/getall/${Index.Id}`);
       const data2 = await response2.json();
       setArms(data2);
     };
@@ -64,6 +66,7 @@ function CreateStudents() {
       return { ...prev, classId: Index.Id };
     });
   };
+
 
   const HandleChange = (e) => {
     const { name, value } = e.target;
@@ -75,6 +78,7 @@ function CreateStudents() {
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(students));
   }, [students]);
+
 
   const fetchData = async () => {
     try {
@@ -93,13 +97,14 @@ function CreateStudents() {
     fetchData();
   }, []);
 
+
   // console.log("=======current id=====", id);
   const updateData = async () => {
     const response = await fetch(`${url}/api/admin/student/${student.Id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        data: {
+        
           firstName: student.firstName,
           lastName: student.lastName,
           otherName: student.otherName,
@@ -108,7 +113,7 @@ function CreateStudents() {
           classId: classId,
           classArmId: classArmId,
           dateCreated: date,
-        },
+    
       }),
     });
     const resJson = await response.json();
@@ -124,8 +129,7 @@ function CreateStudents() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          data: {
-            Id: id,
+          
             firstName: student.firstName,
             lastName: student.lastName,
             otherName: student.otherName,
@@ -133,8 +137,8 @@ function CreateStudents() {
             password: password,
             classId: classId,
             classArmId: classArmId,
-            dateCreated: date,
-          },
+            dateCreated: date
+    
         }),
       });
 
@@ -160,7 +164,8 @@ function CreateStudents() {
     }
     fetchData();
   };
-  console.log(students);
+
+
   const UpdateHandler = async (id) => {
     setUpdateflag(true);
     const student = students.find((student) => student.Id === id);

@@ -49,6 +49,7 @@ const TakeAttendance = () => {
     }
   };
 
+  console.log(attendance);
   const handleAttendanceSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -56,11 +57,13 @@ const TakeAttendance = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          classId: classId,
-          classArmId: classArmId,
-          subjectId: subjectId,
-          dateTaken: dateTaken,
-          timeTaken: timeTaken,
+          studentData: {
+            classId: classId,
+            classArmId: classArmId,
+            subjectId: subjectId,
+            dateTaken: dateTaken,
+            timeTaken: timeTaken,
+          },
           attendance: attendance,
         }),
       });
@@ -128,7 +131,7 @@ const TakeAttendance = () => {
     const value = classes.find((i) => i.className === e.target.value);
     setClassId(value.Id); //classId created to pass to a backend.
     const getArms = async () => {
-      const response2 = await fetch(`${url}/api/admin/classarm/getById/${value.Id}`);
+      const response2 = await fetch(`${url}/api/admin/class/arms/getall/${value.Id}`);
       const data2 = await response2.json();
       setArms(data2);
 

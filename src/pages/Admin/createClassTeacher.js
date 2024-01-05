@@ -7,11 +7,10 @@ import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import DynamicTable from "../../component/DynamicTable";
 import md5 from "md5";
 
-
 const CreateclassTeacher = () => {
   const url = "http://localhost:8010";
   const [error, setError] = useState("");
-  const [over1, setOver1] = useState({id:"",value:false});
+  const [over1, setOver1] = useState({ id: "", value: false });
   const [teacher, setTeacher] = useState({
     firstName: "",
     lastName: "",
@@ -33,8 +32,7 @@ const CreateclassTeacher = () => {
   const [Category, setCategory] = useState();
   const [teachers, setTeachers] = useState([]);
   const [classes, setClasses] = useState([]);
-  const [Arms,setArms] = useState([]);
-  
+  const [Arms, setArms] = useState([]);
 
   const arr = [];
   classes.forEach((object) => {
@@ -52,13 +50,15 @@ const CreateclassTeacher = () => {
       return { ...prev, [name]: value };
     });
   };
- 
+
   const FilterHandle = (e) => {
     setCategory(e.target.value);
     const Index = classes.find((i) => i.className === e.target.value);
     setClassId(Index.Id);
     const getClasses = async () => {
-      const response2 = await fetch(`${url}/arms/${Index.Id}`);
+      const response2 = await fetch(
+        `${url}/api/admin/class/arms/getall/${Index.Id}`
+      );
       const data2 = await response2.json();
       setArms(data2);
     };
@@ -68,7 +68,7 @@ const CreateclassTeacher = () => {
       return { ...prev, classId: Index.Id };
     });
   };
-console.log(classes);
+  console.log(classes);
   const fetchData = async () => {
     try {
       const response = await fetch(`${url}/api/admin/teacher/getall`);
@@ -83,39 +83,36 @@ console.log(classes);
   };
 
   const handleSubmit = async (e) => {
-    try{
+    try {
       e.preventDefault();
       const response = await fetch(`${url}/api/admin/teacher/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-         firstName:teacher.firstName,
-         lastName:teacher.lastName,
-         emailAddress:teacher.emailAddress,
-         password:hashpass,
-         phoneNo:teacher.phoneNo,
-         classId:classId,
-         classArmId:classArmId,
-         dateCreated:date
+          firstName: teacher.firstName,
+          lastName: teacher.lastName,
+          emailAddress: teacher.emailAddress,
+          password: hashpass,
+          phoneNo: teacher.phoneNo,
+          classId: classId,
+          classArmId: classArmId,
+          dateCreated: date
         }),
       });
-    
-        if (!response.ok) {
-          const data = await response.json();
-          console.log(data);
-          throw new Error(data);
-        }
-    }
-     
-    catch(err){
+
+      if (!response.ok) {
+        const data = await response.json();
+        console.log(data);
+        throw new Error(data);
+      }
+    } catch (err) {
       setError(err.message);
     }
     fetchData();
   };
 
-  
   const DeleteHandler = async (id) => {
-    const armId  = teachers.find(teacher => teacher.Id === id).classArmId;
+    const armId = teachers.find((teacher) => teacher.Id === id).classArmId;
     try {
       const response = await fetch(`${url}/api/admin/teacher/${id}/${armId}`, {
         method: "delete",
@@ -123,11 +120,10 @@ console.log(classes);
       const data = await response.json();
       console.log(data);
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
     fetchData();
   };
-
 
   useEffect(() => {
     fetchData();
@@ -175,7 +171,7 @@ console.log(classes);
                       )}
                     </div>
                     <div className="card-body">
-                      <form onSubmit={(e)=>handleSubmit(e)}>
+                      <form onSubmit={(e) => handleSubmit(e)}>
                         <div className="form-group row mb-3">
                           <div className="col-xl-6">
                             <label className="form-control-label">
@@ -246,21 +242,21 @@ console.log(classes);
                               <span className="text-danger ml-2">*</span>
                             </label>
                             {classes && (
-                            <select
-                              required
-                              className="form-control mb-3"
-                              onChange={(e) => FilterHandle(e)}
-                            >
-                              <option value="">--Select Class--</option>
-                              {arr.map((item, index) => {
-                                return (
-                                  <option key={index} value={item}>
-                                    {item}
-                                  </option>
-                                );
-                              })}
-                            </select>
-                          )}
+                              <select
+                                required
+                                className="form-control mb-3"
+                                onChange={(e) => FilterHandle(e)}
+                              >
+                                <option value="">--Select Class--</option>
+                                {arr.map((item, index) => {
+                                  return (
+                                    <option key={index} value={item}>
+                                      {item}
+                                    </option>
+                                  );
+                                })}
+                              </select>
+                            )}
                           </div>
                           <div className="col-xl-6">
                             <label className="form-control-label">
@@ -268,43 +264,42 @@ console.log(classes);
                               <span className="text-danger ml-2">*</span>
                             </label>
                             {Category && (
-                            <select
-                              required
-                              name="classArmId"
-                              className="form-control mb-3"
-                              onChange={(e) => {
-                                const armId = Arms.find(
-                                  (a) => a.classArmName === e.target.value
-                                );
-                                setClassArmId(armId.Id);
-                                setTeacher((prev) => {
-                                  return { ...prev, classArmId: armId.Id };
-                                });
-                              }}
-                            >
-                              <option value="">--Select Class Arm--</option>
-                              {arr2.map((item, index) => {
-                                return (
-                                  <option key={index} value={item}>
-                                    {item}
-                                  </option>
-                                );
-                              })}
-                            </select>
-                          )}
+                              <select
+                                required
+                                name="classArmId"
+                                className="form-control mb-3"
+                                onChange={(e) => {
+                                  const armId = Arms.find(
+                                    (a) => a.classArmName === e.target.value
+                                  );
+                                  setClassArmId(armId.Id);
+                                  setTeacher((prev) => {
+                                    return { ...prev, classArmId: armId.Id };
+                                  });
+                                }}
+                              >
+                                <option value="">--Select Class Arm--</option>
+                                {arr2.map((item, index) => {
+                                  return (
+                                    <option key={index} value={item}>
+                                      {item}
+                                    </option>
+                                  );
+                                })}
+                              </select>
+                            )}
                             {/* <?php
                                 echo"<div id='txtHint'></div>";
                             ?> */}
                           </div>
                         </div>
-                          <button
-                            type="submit"
-                            name="save"
-                            className="btn btn-primary"
-                          >
-                            Save
-                          </button>
-                       
+                        <button
+                          type="submit"
+                          name="save"
+                          className="btn btn-primary"
+                        >
+                          Save
+                        </button>
                       </form>
                     </div>
                   </div>
@@ -319,46 +314,55 @@ console.log(classes);
                           </h6>
                         </div>
                         <div className="table-responsive align-items-center table-flush p-3">
-                              {teachers &&
-                                teachers.length > 0 && (
-                                  <DynamicTable
-                                  columns={[
-                                    { label: "#", field: "index" },
-                                    { label: "FirstName", field: "firstName" },
-                                    { label: "LastName", field: "lastName" },
-                                    { label: "EmailAddress", field: "emailAddress" },
-                                    { label: "Phone No", field: "phoneNo" },
-                                    { label: "ClassName", field: "className" },
-                                    { label: "ClassArm Name", field: "classArmName" },
-                                    { label: "Date Created", field: "dateCreated" },
-                                    { label: "Delete", field: "delete" },
-                                  ]}
-                                  rows={teachers.map((item, i) => ({
-                                    index: item.Id.toString(),
-                                    firstName: item.firstName,
-                                    lastName: item.lastName,
-                                    emailAddress: item.emailAddress,
-                                    phoneNo: item.phoneNo,
-                                    className: item.className,
-                                    classArmName: item.classArmName,
-                                    dateCreated: item.dateCreated,
-                                    delete: (
-                                      <FontAwesomeIcon
-                                        icon={faTrashCan}
-                                        onMouseOver={() => setOver1({ id: item.Id, value: true })}
-                                        onMouseLeave={() => setOver1({ id: item.Id, value: false })}
-                                        style={
-                                          over1.id === item.Id && over1.value === true
-                                            ? { color: "red", cursor: "pointer" }
-                                            : {}
-                                        }
-                                        onClick={() => DeleteHandler(item.Id)}
-                                      />
-                                    )
-                                  }))}
-                                />
-                                )
-                              }
+                          {teachers && teachers.length > 0 && (
+                            <DynamicTable
+                              columns={[
+                                { label: "#", field: "index" },
+                                { label: "FirstName", field: "firstName" },
+                                { label: "LastName", field: "lastName" },
+                                {
+                                  label: "EmailAddress",
+                                  field: "emailAddress",
+                                },
+                                { label: "Phone No", field: "phoneNo" },
+                                { label: "ClassName", field: "className" },
+                                {
+                                  label: "ClassArm Name",
+                                  field: "classArmName",
+                                },
+                                { label: "Date Created", field: "dateCreated" },
+                                { label: "Delete", field: "delete" },
+                              ]}
+                              rows={teachers.map((item, i) => ({
+                                index: item.Id.toString(),
+                                firstName: item.firstName,
+                                lastName: item.lastName,
+                                emailAddress: item.emailAddress,
+                                phoneNo: item.phoneNo,
+                                className: item.className,
+                                classArmName: item.classArmName,
+                                dateCreated: item.dateCreated,
+                                delete: (
+                                  <FontAwesomeIcon
+                                    icon={faTrashCan}
+                                    onMouseOver={() =>
+                                      setOver1({ id: item.Id, value: true })
+                                    }
+                                    onMouseLeave={() =>
+                                      setOver1({ id: item.Id, value: false })
+                                    }
+                                    style={
+                                      over1.id === item.Id &&
+                                      over1.value === true
+                                        ? { color: "red", cursor: "pointer" }
+                                        : {}
+                                    }
+                                    onClick={() => DeleteHandler(item.Id)}
+                                  />
+                                ),
+                              }))}
+                            />
+                          )}
                           {/* </table> */}
                         </div>
                       </div>
@@ -378,7 +382,6 @@ console.log(classes);
         <a className="scroll-to-top rounded" href="#page-top">
           <i className="fas fa-angle-up"></i>
         </a>
-
       </div>
     </div>
   );

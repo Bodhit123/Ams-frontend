@@ -65,18 +65,21 @@ const ViewClassAttendance = () => {
     const value = classes.find((i) => i.className === e.target.value);
     setClassId(value.Id); //classId created to pass to a backend.
     const getArms = async () => {
-      const response2 = await fetch(`${url}/api/admin/classarm/getById/${value.Id}`);
+      const response2 = await fetch(`${url}/api/admin/class/arms/getall/${value.Id}`);
       const data2 = await response2.json();
       setArms(data2);
 
       const response = await fetch(`${url}/api/teacher/subjects/${value.Id}`);
       const data = await response.json();
+      console.log(data);
       setSubjects(data);
     };
 
     getArms();
   };
 
+  console.log(subjectId);
+  console.log(subjects);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -84,14 +87,15 @@ const ViewClassAttendance = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          subjectId: subjectId,
-          dateTaken: dateTaken,
           classId: classId,
           classArmId: classArmId,
+          subjectId: subjectId,
+          dateTaken: dateTaken,
         }),
       });
       if (response.ok) {
         const data = await response.json();
+        console.log(data);
         if (data && data.length > 0) {
           setFetchStudents(data);
         } else {

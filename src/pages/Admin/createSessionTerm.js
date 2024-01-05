@@ -127,17 +127,17 @@ const CreateSessionTerm = () => {
                                 <td></td>
                                 <td></td>
                                 <td>
-                                  <a href="#">
+                                  <a href=".">
                                     <i class="fas fa-fw fa-check"></i>
                                   </a>
                                 </td>
                                 <td>
-                                  <a href="">
+                                  <a href=".">
                                     <i class="fas fa-fw fa-edit"></i>
                                   </a>
                                 </td>
                                 <td>
-                                  <a href="">
+                                  <a href=".">
                                     <i class="fas fa-fw fa-trash"></i>
                                   </a>
                                 </td>
