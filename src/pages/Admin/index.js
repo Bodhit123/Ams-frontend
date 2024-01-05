@@ -5,7 +5,7 @@ import Footer from "../../component/footer";
 import "../Admin/css/ruang-admin.css";
 
 const AdminPanel = () => {
-    const url = "http://localhost:8010";
+    const url = "https://ams-made-ez.onrender.com";
     const [lenStud,setLenStud] =useState("");
     const [lenClass,setLenClass] = useState("");
     const [lenteacher,setLenteacher] = useState("");
@@ -36,7 +36,7 @@ const AdminPanel = () => {
         const data4 = await res4.json();
         setAtten(data4.length);
 
-        const res5= await fetch(`${url}/api/admin/session/getall`);
+        const res5= await fetch(`${url}/api/admin/session/getAll`);
         const data5 = await res5.json();
         setSession(data5.length);
         

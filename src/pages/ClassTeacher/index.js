@@ -8,7 +8,7 @@ const TeacherHome = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const classId = user.classId;
   const ArmId = user.classArmId;
-  const url = "http://localhost:8010";
+  const url = "https://ams-made-ez.onrender.com";
   const [classLength, setClassLength] = useState();
   const [studLength, setStudLength] = useState();
   const [armsLength, setArmsLength] = useState();

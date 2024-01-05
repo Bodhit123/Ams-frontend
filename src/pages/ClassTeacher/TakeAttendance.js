@@ -7,7 +7,7 @@ import Sidebar1 from "../../component/sidebar1";
 import DynamicTable from "../../component/DynamicTable";
 
 const TakeAttendance = () => {
-  const url = "http://localhost:8010";
+  const url = "https://ams-made-ez.onrender.com";
   const [submitted, setSubmitted] = useState(false);
   const [classArmId, setClassArmId] = useState();
   const [subjectId, setSubjectId] = useState();

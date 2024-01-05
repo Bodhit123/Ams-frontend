@@ -7,7 +7,7 @@ import { faEdit, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import DynamicTable from "../../component/DynamicTable";
 
 const CreateclassArms = () => {
-  const url = "http://localhost:8010";
+  const url = "https://ams-made-ez.onrender.com";
   const [error, setError] = useState("");
   const [over, setOver] = useState({ id: "", value: false });
   const [over1, setOver1] = useState({ id: "", value: false });

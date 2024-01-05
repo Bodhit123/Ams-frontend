@@ -8,7 +8,7 @@ import DynamicTable from "../../component/DynamicTable";
 import md5 from "md5";
 
 const CreateclassTeacher = () => {
-  const url = "http://localhost:8010";
+  const url = "https://ams-made-ez.onrender.com";
   const [error, setError] = useState("");
   const [over1, setOver1] = useState({ id: "", value: false });
   const [teacher, setTeacher] = useState({

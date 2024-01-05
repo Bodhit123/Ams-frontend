@@ -16,7 +16,7 @@ const ViewClassAttendance = () => {
   const [dateTaken, setdateTaken] = useState("");
   const [selectedSubject, setSelectedSubject] = useState();
   const [selectedClass, setSelectedClass] = useState();
-  const url = "http://localhost:8010";
+  const url = "https://ams-made-ez.onrender.com";
   
   useEffect(() => {
     // Scroll to top button appear

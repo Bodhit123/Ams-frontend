@@ -6,3 +6,11 @@ node_modules/
 
 # Environment variables
 .env
+
+# Ignore build artifacts (generated during frontend build)
+frontend/build/
+
+# Ignore any other generated files or directories
+build/
+dist/
+*.log

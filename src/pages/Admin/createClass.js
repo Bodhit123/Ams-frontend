@@ -10,7 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import DynamicTable from "../../component/DynamicTable";
 
 const Createclass = () => {
-  const url = "http://localhost:8010";
+  const url = "https://ams-made-ez.onrender.com";
   const [className, setClassName] = useState("");
   const [classes, setClasses] = useState([]);
   const [error, setError] = useState("");

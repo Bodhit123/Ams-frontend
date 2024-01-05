@@ -9,7 +9,7 @@ import StudentModal from "../../component/StudentModal";
 
 const ViewStudents = () => {
   // const tableRef = useRef(null);
-  const url = "http://localhost:8010";
+  const url = "https://ams-made-ez.onrender.com";
   const [students, setStudents] = useState([]);
   const [className, setclassName] = useState("");
   const [arm, setArm] = useState("");

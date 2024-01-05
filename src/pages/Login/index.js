@@ -17,7 +17,7 @@ const Login = () => {
 
   
   const apicall = async (user) => {
-    const url = "http://localhost:8010";
+    const url = "https://ams-made-ez.onrender.com";
     const hashedPassword = md5(password);
     const response = await fetch(`${url}/api/login/${user}`, {
       method: "POST",

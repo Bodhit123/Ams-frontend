@@ -6,7 +6,7 @@ const Reports = () => {
 
   const fetchStudentsInClass = async () => {
     try {
-      const url = "http://localhost:8010";
+      const url = "https://ams-made-ez.onrender.com";
       const response = await fetch(`${url}/generate_reports`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

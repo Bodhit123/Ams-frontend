@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 function CreateStudents() {
-  const url = "http://localhost:8010";
+  const url = "https://ams-made-ez.onrender.com";
   const key = "key_local_storage";
   const [students, setStudents] = useState(
     JSON.parse(localStorage.getItem(key)) ?? []

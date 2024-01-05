@@ -5,7 +5,7 @@ import Footer from "../../component/footer";
 import DynamicTable from "../../component/DynamicTable";
 
 const ViewStudentAttendance = () => {
-  const url = "http://localhost:8010";
+  const url = "https://ams-made-ez.onrender.com";
   const [Students, setStudents] = useState([]);
   const [classes, setClasses] = useState([]);
   const [classId, setClassId] = useState("");
@@ -99,7 +99,7 @@ const ViewStudentAttendance = () => {
     async (e) => {
       e.preventDefault();
       console.log("Student", SelectedStudent);
-      const url = "http://localhost:8010/api/teacher/student/attendance";
+      const url = "https://ams-made-ez.onrender.com/api/teacher/student/attendance";
       const data = {
         type: selectedType,
         admissionNumber: adNo,
