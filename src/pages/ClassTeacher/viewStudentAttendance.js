@@ -201,7 +201,7 @@ const ViewStudentAttendance = () => {
 
   useEffect(() => {
     const fetchClasses = async () => {
-      let url1 = "http://localhost:8010";
+      let url1 = "https://ams-made-ez.onrender.com/api/teacher/student/attendance";
       const response1 = await fetch(`${url1}/api/admin/class/getallASC`);
       const data1 = await response1.json();
       setClasses(data1);
