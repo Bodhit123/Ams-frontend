@@ -79,7 +79,7 @@ function CreateStudents() {
     localStorage.setItem(key, JSON.stringify(students));
   }, [students]);
 
-
+ console.log(id);
   const fetchData = async () => {
     try {
       const response = await fetch(`${url}/api/admin/student/getall`);
