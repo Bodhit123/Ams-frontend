@@ -147,9 +147,16 @@ const Login = () => {
                             />
                           </div>
 
-                          <div className="form-group d-flex position-relative">
+                          <div
+                            className="form-group d-flex position-relative"
+                            onClick={() => {
+                              document.getElementById("submitBtn").click();
+                            }}
+                            style={{ cursor: "pointer" }}
+                          >
                             <input
                               type="submit"
+                              id="submitBtn"
                               className="btn bg-indigo-400 btn-block"
                               style={{
                                 width: "100%",
@@ -166,7 +173,6 @@ const Login = () => {
                                 left: "50%",
                                 top: "25%",
                                 position: "absolute",
-                                cursor: 'pointer'
                               }}
                             ></i>
                           </div>
