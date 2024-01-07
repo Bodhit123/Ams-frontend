@@ -1,8 +1,9 @@
 import md5 from "md5";
 import React, { useState, useContext } from "react";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/Auth";
-import logoimage from "../Admin/img/logo/attnlg.jpg";
+import logoimage from "../Admin/img/image3d.jpg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../Admin/css/ruang-admin.css";
 import "../Admin/css/ruang-admin.min.css";
@@ -15,7 +16,6 @@ const Login = () => {
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
 
-  
   const apicall = async (user) => {
     const url = "https://ams-made-ez.onrender.com";
     const hashedPassword = md5(password);
@@ -36,7 +36,6 @@ const Login = () => {
     return data;
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -48,7 +47,7 @@ const Login = () => {
       } else {
         throw new Error("Invalid user type"); // Optional: Add explicit handling for invalid user types
       }
-    
+
       const data = await apicall(userTypePath);
       await authContext.setUser(data[0]);
       setEmailAddress("");
@@ -59,7 +58,6 @@ const Login = () => {
       console.error(error);
       setError(error.message);
     }
-    
   };
 
   console.log(userType);
@@ -75,31 +73,49 @@ const Login = () => {
                   <div className="row">
                     <div className="col-lg-12">
                       <div className="login-form">
-                        <h4 className="text-gray-600 fw-300" align="center">ATTENDANCE MANAGEMENT SYSTEM</h4>
-                        <div className="text-center">
+                        <h4
+                          className="text-gray-600 fw-bold"
+                          align="center"
+                          style={{ fontSize: "28px" }}
+                        >
+                          ATTENDANCE MANAGEMENT SYSTEM
+                        </h4>
+                        <div className="text-center p-1">
                           <img
                             src={logoimage}
                             alt="loading"
-                            style={{ width: "100px", height: "100px" }}
+                            style={{
+                              width: "280px",
+                              height: "250px",
+                              borderRadius: "50%",
+                              border: "2px solid #ccc",
+                              boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)",
+                            }}
                           />
                           <br />
                           <br />
-                          <h4 className="text-gray-800 mb-4">LOG IN</h4>
+                          <h4
+                            className="mb-4 text-gray-600 fw-bolder"
+                            style={{ fontSize: "25px" }}
+                          >
+                            SIGN IN
+                          </h4>
                         </div>
                         <form
                           className="user"
                           autoComplete="on"
+                          style={{ paddingTop: "0" }}
                           onSubmit={(e) => handleSubmit(e)}
                         >
                           <div className="form-group">
                             <select
                               required
                               name="userType"
-                              className="form-control mb-3"
+                              className="form-control mb-3 text-center rounded-pill custom-select"
                               value={userType}
                               onChange={(e) => setUserType(e.target.value)}
                             >
-                              <option value="">--Select User Roles--</option>
+                              <option value="">Select Role</option>
                               <option value="Administrator">
                                 Administrator
                               </option>
@@ -109,11 +125,11 @@ const Login = () => {
                           <div className="form-group">
                             <input
                               type="text"
-                              className="form-control mb-3"
+                              className="form-control mb-3 text-center rounded-pill custom-form-control "
                               required
                               name="username"
                               id="exampleInputEmail"
-                              placeholder="Enter Email Address"
+                              placeholder=" Enter Email Address"
                               value={emailAddress}
                               onChange={(e) => setEmailAddress(e.target.value)}
                             />
@@ -123,7 +139,7 @@ const Login = () => {
                               type="password"
                               name="password"
                               required
-                              className="form-control mb-5"
+                              className="form-control mb-5 text-center rounded-pill custom-form-control "
                               id="exampleInputPassword"
                               placeholder="Enter Password"
                               value={password}
@@ -131,14 +147,28 @@ const Login = () => {
                             />
                           </div>
 
-                          <div className="form-group">
+                          <div className="form-group d-flex position-relative">
                             <input
                               type="submit"
-                              className="btn btn-success btn-block"
-                              style={{ width: "100%" }}
-                              value="Login"
+                              className="btn bg-indigo-400 btn-block"
+                              style={{
+                                width: "100%",
+                                fontWeight: "bold",
+                                fontSize: "20px",
+                              }}
+                              value=""
                               name="login"
                             />
+                            <i
+                              className="fas fa-sign-in-alt"
+                              style={{
+                                fontSize: "25px",
+                                left: "50%",
+                                top: "25%",
+                                position: "absolute",
+                                cursor: 'pointer'
+                              }}
+                            ></i>
                           </div>
                         </form>
 
