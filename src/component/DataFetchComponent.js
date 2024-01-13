@@ -6,10 +6,13 @@ import LoadingSpinner from "./Spinner";
 const fetchData = async (fetchFunction, setDataCallback) => {
   try {
     const response = await fetchFunction();
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
     const data = await response.json();
     setDataCallback(data.length);
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error("Error fetching data:", error.message);
   }
 };
 
