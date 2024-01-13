@@ -2,7 +2,7 @@
 import React, {  useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Collapse } from "react-bootstrap";
-import logoimage from "../pages/Admin/img/logo/attnlg.jpg";
+import logoimage from "../pages/Admin/img/logo/mylogo.png";
 import "../pages/Admin/css/ruang-admin.css";
 import { Link } from "react-router-dom";
 
@@ -95,10 +95,10 @@ const Sidebar = () => {
           className="sidebar-brand d-flex align-items-center bg-gradient-primary"
           href="#"
         >
-          <div className="sidebar-brand-icon">
+          <div className="sidebar-brand-icon w-5">
             <img src={logoimage} alt="" />
           </div>
-          <div className="sidebar-brand-text mx-2">AMS</div>
+          {/* <div className="sidebar-brand-text">AMS</div> */}
         </a>
         <hr className="sidebar-divider my-0" />
         <li className="nav-item active">

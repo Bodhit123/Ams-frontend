@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Collapse } from "react-bootstrap";
-import logoimage from "../pages/Admin/img/logo/attnlg.jpg";
+import logoimage from "../pages/Admin/img/logo/mylogo.png";
 import "../pages/Admin/css/ruang-admin.css";
 import { Link } from "react-router-dom";
 import * as XLSX from 'xlsx';
