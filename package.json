@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.3",
     "jquery": "^3.7.0",
+    "lodash": "^4.17.21",
     "md5": "^2.3.0",
     "mdb-react-ui-kit": "^6.0.0",
     "mdbreact": "^4.26.0",

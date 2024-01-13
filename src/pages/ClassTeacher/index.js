@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState,useEffect } from "react";
 import Sidebar1 from "../../component/sidebar1";
 import Topbar from "../../component/topbar";
+import DataFetchComponent from "../../component/DataFetchComponent";
 import "../Admin/css/ruang-admin.css";
 import Footer from "../../component/footer";
 
@@ -13,6 +14,28 @@ const TeacherHome = () => {
   const [studLength, setStudLength] = useState();
   const [armsLength, setArmsLength] = useState();
   const [attendance, setAttendance] = useState();
+
+  const fetchFunctions = [
+    () => fetch(`${url}/api/teacher/view/students`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        classId: classId,
+        classArmId: ArmId,
+      }),
+    }),
+    () => fetch(`${url}/api/admin/class/getall`),
+    () => fetch(`${url}/api/admin/classarm/getall`),
+    () => fetch(`${url}/api/teacher/getall/class/attendance/${classId}/${ArmId}`),
+  ];
+
+  const dataCallbacks = [
+    setStudLength,
+    setClassLength,
+    setArmsLength,
+    setAttendance
+  ];
+
 
   const getStudents = async () => {
     const response = await fetch(`${url}/api/teacher/view/students`, {
@@ -28,30 +51,27 @@ const TeacherHome = () => {
     setStudLength(data.length);
   };
 
-  const getClasses = async () => {
-    const response = await fetch(`${url}/api/admin/class/getall`);
-    const data = await response.json();
-    setClassLength(data.length);
-  };
-  const getArms = async () => {
-    const response = await fetch(`${url}/api/admin/classarm/getall`);
-    const data = await response.json();
-    setArmsLength(data.length);
-  };
+  // const getClasses = async () => {
+  //   const response = await fetch(`${url}/api/admin/class/getall`);
+  //   const data = await response.json();
+  //   setClassLength(data.length);
+  // };
+  // const getArms = async () => {
+  //   const response = await fetch(`${url}/api/admin/classarm/getall`);
+  //   const data = await response.json();
+  //   setArmsLength(data.length);
+  // };
 
-  const getClassAttendance = async () => {
-    const response = await fetch(
-      `${url}/api/teacher/getall/class/attendance/${classId}/${ArmId}`
-    );
-    const data = await response.json();
-    setAttendance(data.length);
-  };
+  // const getClassAttendance = async () => {
+  //   const response = await fetch(
+  //     `${url}/api/teacher/getall/class/attendance/${classId}/${ArmId}`
+  //   );
+  //   const data = await response.json();
+  //   setAttendance(data.length);
+  // };
 
   useEffect(() => {
     getStudents();
-    getClasses();
-    getArms();
-    getClassAttendance();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -65,8 +85,14 @@ const TeacherHome = () => {
             <div id="content">
               {/* <!-- TopBar --> */}
               <Topbar />
+                {/* Use DataFetchComponent for fetching data */}
+                <DataFetchComponent
+                url={url}
+                fetchFunctions={fetchFunctions}
+                dataCallbacks={dataCallbacks}
+                debounceTime={500}
+              />
               {/* <!-- Container Fluid--> */}
-
               <div className="container-fluid" id="container-wrapper">
                 <div className="d-sm-flex align-items-center justify-content-between mb-4">
                   <h1 className="h3 mb-0 text-gray-800">
